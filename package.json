@@ -1,0 +1,34 @@
+{
+  "name": "wedin.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "git subtree push --prefix dest origin master",
+    "production": "gulp build --production",
+    "deploy": "npm run production && npm run publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wedin/wedin.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Wedin/wedin.github.io/issues"
+  },
+  "homepage": "https://github.com/Wedin/wedin.github.io#readme",
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "browser-sync": "^2.18.12",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-nf-prettier": "^2.0.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0",
+    "prettier": "^1.5.2",
+    "pump": "^1.0.2"
+  }
+}

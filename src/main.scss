@@ -1,0 +1,37 @@
+html {
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+  color: #34495e;
+  height: 100%;
+}
+body {
+  height: 100%;
+  margin: 0;
+}
+.header {
+  margin: 0 auto;
+  text-align: center;
+  transition: all 0.35s ease-in-out;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
+.animate-in {
+  transform: translateY(20px);
+  opacity: 0;
+}
+h1 {
+  font-weight: 300;
+  font-size: 50px;
+}
+h2 {
+  font-weight: 300;
+  font-size: 20px;
+}
+a {
+  text-decoration: none;
+  color: #34495e;
+}
