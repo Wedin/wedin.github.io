@@ -25,10 +25,13 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-babel": "^6.1.2",
+    "gulp-clean": "^0.3.2",
     "gulp-nf-prettier": "^2.0.0",
     "gulp-sass": "^3.1.0",
+    "gulp-sequence": "^0.4.6",
     "gulp-uglify": "^3.0.0",
     "prettier": "^1.5.2",
-    "pump": "^1.0.2"
+    "pump": "^1.0.2",
+    "uglify-js": "^3.0.20"
   }
 }

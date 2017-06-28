@@ -7,6 +7,8 @@ const uglify        = require('gulp-uglify');
 const autoprefixer  = require('gulp-autoprefixer');
 const util          = require('gulp-util');
 const pump          = require('pump');
+var gulpSequence    = require('gulp-sequence')
+var clean           = require('gulp-clean');
 
 const config = {
   scssSrc: 'src/*.scss',
@@ -17,7 +19,7 @@ const config = {
   production: !!util.env.production, // --production
 };
 
-gulp.task('serve', ['sass', 'scripts', 'compress', 'copy-static'], function() {
+gulp.task('serve', ['sass', 'scripts', 'copy-static'], () => {
   browserSync.init({
     server: config.dest
   });
@@ -26,9 +28,13 @@ gulp.task('serve', ['sass', 'scripts', 'compress', 'copy-static'], function() {
   gulp.watch(config.htmlSrc).on('change', browserSync.reload);
 });
 
-gulp.task('scripts', () => {
-  gulp.src(config.jsSrc)
-  .pipe(gulp.dest(config.dest));
+gulp.task('scripts', ['prettier'], (cb) => {
+  pump([
+    gulp.src(config.jsSrc),
+    config.production ? babel({ presets: ['es2015'] }) : util.noop(),
+    config.production ? uglify().on('error', (e) => {console.log(e)}) : util.noop(),
+    gulp.dest(config.dest)
+    ], cb);
 });
 
 gulp.task('prettier', () => {
@@ -48,16 +54,6 @@ gulp.task('prettier', () => {
   .pipe(gulp.dest(config.src));
 });
 
-
-gulp.task('compress', ['scripts'], function (cb) {
-  pump([
-       gulp.src(config.jsSrc),
-       config.production ? babel({ presets: ['es2015'] }) : util.noop(),
-       config.production ? uglify() : util.noop(),
-       gulp.dest(config.dest)
-       ], cb);
-});
-
 gulp.task('copy-static', () => {
   gulp.src(config.htmlSrc)
   .pipe(gulp.dest(config.dest));
@@ -74,6 +70,10 @@ gulp.task('sass', () => {
   .pipe(browserSync.stream());
 });
 
-gulp.task('build', ['sass', 'compress']);
+gulp.task('cleanup', (cb) => {
+  return gulp.src(config.dest + '*')
+    .pipe(clean());
+});
 
+gulp.task('build', gulpSequence('cleanup', ['copy-static', 'sass', 'scripts']));
 gulp.task('default', ['serve']);
