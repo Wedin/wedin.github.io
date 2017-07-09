@@ -1,37 +1,120 @@
 html {
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   color: #34495e;
+  background: #f9fafb;
   height: 100%;
+  &.dark {
+    background: #0f0f0f;
+    color: #bdc3c7;
+  }
 }
 body {
   height: 100%;
   margin: 0;
 }
+
 .header {
   margin: 0 auto;
   text-align: center;
-  transition: all 0.35s ease-in-out;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 100%;
 }
+
+.top-heading {
+  font-weight: 300;
+  font-size: 50px;
+  margin: 30px 0;
+}
+
+.mail-msg {
+  margin-top: 30px;
+  font-style: italic;
+  > a {
+    text-decoration: underline;
+  }
+}
+
+// SOCIAL
+.social {
+  display: flex;
+  margin-top: 30px;
+  width: 275px; // media query this
+  justify-content: space-between;
+}
+
+.social-link {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100%;
+  transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
+
+  &:hover {
+    opacity: 0.65;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.facebook {
+  background-image: url('assets/facebook.svg');
+}
+
+.twitter {
+  background-image: url('assets/twitter.svg');
+}
+
+.instagram {
+  background-image: url('assets/instagram.svg');
+}
+
+.github {
+  background-image: url('assets/github.svg');
+}
+
+.linkedin {
+  background-image: url('assets/linkedin.svg');
+}
+
+// ANIMATIONS
+.animate {
+  transition: all 0.35s ease-in-out;
+}
 .animate-in {
   transform: translateY(20px);
   opacity: 0;
 }
-h1 {
-  font-weight: 300;
-  font-size: 50px;
+
+$class-slug: animated-delay !default;
+$default-delay: 0.3;
+
+@for $i from 0 through 10 {
+  $animate-variable: $i * $default-delay;
+  $test: #{$animate-variable}#{"s"};
+
+  .#{$class-slug}-#{$i} {
+    transition-delay: $test;
+  }
 }
-h2 {
-  font-weight: 300;
-  font-size: 20px;
-}
+
+
 a {
   text-decoration: none;
   color: #34495e;
+  transition: color 0.25s ease;
+  cursor: pointer;
+  &:hover {
+    color: lighten(#34495e, 20%);
+  }
+}
+p {
+  margin: 0;
 }

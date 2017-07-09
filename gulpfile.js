@@ -17,6 +17,7 @@ const config = {
   src: 'src/',
   dest: 'dest/',
   htmlSrc: 'src/index.html',
+  assets: 'src/assets/*',
   production: !!util.env.production, // --production
 };
 
@@ -26,7 +27,8 @@ gulp.task('serve', ['sass', 'scripts', 'copy-static'], () => {
   });
   gulp.watch(config.scssSrc, ['sass']).on('change', browserSync.reload);
   gulp.watch(config.jsSrc, ['scripts']).on('change', browserSync.reload);
-  gulp.watch(config.htmlSrc).on('change', browserSync.reload);
+  gulp.watch(config.htmlSrc, ['copy-static']).on('change', browserSync.reload);
+  gulp.watch('src/assets/*', ['copy-static']).on('change', browserSync.reload);
 });
 
 gulp.task('scripts', ['prettier'], (cb) => {
@@ -57,8 +59,11 @@ gulp.task('prettier', () => {
 
 gulp.task('copy-static', () => {
   gulp.src(config.htmlSrc)
-  .pipe(inlinesource({rootpath: config.dest}))
+  .pipe(config.production ? inlinesource({rootpath: config.dest}) : util.noop())
   .pipe(gulp.dest(config.dest));
+
+  gulp.src(config.assets)
+  .pipe(gulp.dest(`${config.dest}/assets`));
 });
 
 gulp.task('sass', () => {
