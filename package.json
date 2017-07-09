@@ -26,6 +26,7 @@
     "gulp-autoprefixer": "^4.0.0",
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
+    "gulp-inline-source": "^3.1.0",
     "gulp-nf-prettier": "^2.0.0",
     "gulp-sass": "^3.1.0",
     "gulp-sequence": "^0.4.6",
