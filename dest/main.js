@@ -1,0 +1,1 @@
+"use strict";window.addEventListener("load",function(e){document.querySelector(".header").classList.remove("animate-in")});
