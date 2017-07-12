@@ -10,6 +10,7 @@ const pump          = require('pump');
 const gulpSequence  = require('gulp-sequence');
 const clean         = require('gulp-clean');
 const inlinesource  = require('gulp-inline-source');
+const concat        = require('gulp-concat');
 
 const config = {
   scssSrc: 'src/*.scss',
@@ -18,6 +19,7 @@ const config = {
   dest: 'dest/',
   htmlSrc: 'src/index.html',
   assets: 'src/assets/*',
+  prodJsSrc: ['src/vendor/analytics.js'],
   production: !!util.env.production, // --production
 };
 
@@ -32,8 +34,10 @@ gulp.task('serve', ['sass', 'scripts', 'copy-static'], () => {
 });
 
 gulp.task('scripts', ['prettier'], (cb) => {
+  const allScripts = config.production ? [config.jsSrc, ...config.prodJsSrc] : config.jsSrc;
   pump([
-       gulp.src(config.jsSrc),
+       gulp.src(allScripts),
+       concat('scripts.js'),
        config.production ? babel({ presets: ['es2015'] }) : util.noop(),
        config.production ? uglify().on('error', (e) => {console.log(e)}) : util.noop(),
        gulp.dest(config.dest)

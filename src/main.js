@@ -13,6 +13,7 @@
       if (delay) {
         this.classList.remove(delay);
       }
+      this.removeEventListener('transitionend', cleanupAnimateIn);
     }
   }
   const animateIn = elem => {
