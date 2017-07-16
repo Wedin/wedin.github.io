@@ -19,7 +19,8 @@ const config = {
   src: 'src/',
   dest: 'dest/',
   htmlSrc: 'src/index.html',
-  assets: 'src/assets/*',
+  assets: ['src/manifest.json'],
+  images: ['src/assets/*'],
   prodJsSrc: ['src/vendor/analytics.js'],
   production: !!util.env.production, // --production
 };
@@ -62,14 +63,18 @@ gulp.task('prettier', () => {
   .pipe(gulp.dest(config.src));
 });
 
-gulp.task('copy-static', () => {
+gulp.task('images', () => {
+  gulp.src(config.images)
+  .pipe(svgmin())
+  .pipe(gulp.dest(`${config.dest}/assets`));
+});
+
+gulp.task('copy-static', ['images'], () => {
   gulp.src(config.htmlSrc)
   .pipe(config.production ? inlinesource({rootpath: config.dest}) : util.noop())
   .pipe(gulp.dest(config.dest));
-
   gulp.src(config.assets)
-  .pipe(svgmin())
-  .pipe(gulp.dest(`${config.dest}/assets`));
+  .pipe(gulp.dest(config.dest));
 });
 
 gulp.task('sass', () => {

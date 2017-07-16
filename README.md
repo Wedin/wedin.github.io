@@ -24,3 +24,6 @@ Do something along the lines of:
 `git rebase master`
 `git push origin temp:master`
 `git branch -D temp`
+
+* `git subtree split --prefix dest -b temp && git checkout temp && git rebase master`
+* `git push origin temp:master && git checkout develop && git branch -D temp`
