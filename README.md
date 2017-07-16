@@ -15,9 +15,12 @@ npm run deploy
 Run the `gulp` command to start browser sync for local development.
 
 ### Errors
-In the case where the first deploy to the remote master branch returns an error with the message `hint: Updates were rejected because a pushed branch tip is behind its remote`.
+Taking care of changes to remote master: (`hint: Updates were rejected because a pushed branch tip is behind its remote`.)
 
-* Set the `develop` branch as the default branch in the repository settings
-* Checkout `develop` and delete the remote `master` branch by `git push origin :master`
-* Recreate the master branch `git subtree push --prefix dest origin master`
-
+Do something along the lines of:
+`git checkout develop`
+`git subtree split --prefix dest -b temp`
+`git checkout temp`
+`git rebase master`
+`git push origin temp:master`
+`git branch -D temp`

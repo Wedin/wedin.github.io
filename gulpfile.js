@@ -11,6 +11,7 @@ const gulpSequence  = require('gulp-sequence');
 const clean         = require('gulp-clean');
 const inlinesource  = require('gulp-inline-source');
 const concat        = require('gulp-concat');
+const svgmin        = require('gulp-svgmin');
 
 const config = {
   scssSrc: 'src/*.scss',
@@ -67,6 +68,7 @@ gulp.task('copy-static', () => {
   .pipe(gulp.dest(config.dest));
 
   gulp.src(config.assets)
+  .pipe(svgmin())
   .pipe(gulp.dest(`${config.dest}/assets`));
 });
 
