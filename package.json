@@ -6,17 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "git subtree push --prefix dest origin master",
+    "publish-f": "git push origin `git subtree split --prefix dist master`:master --force",
     "production": "gulp build --production",
-    "deploy": "npm run production && npm run publish"
+    "deploy": "npm run production && npm run publish",
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Wedin/wedin.github.io.git"
+    "url": "git+https://github.com/Wedin/wedin.github.io.git",
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Wedin/wedin.github.io/issues"
+    "url": "https://github.com/Wedin/wedin.github.io/issues",
   },
   "homepage": "https://github.com/Wedin/wedin.github.io#readme",
   "dependencies": {
@@ -35,6 +36,6 @@
     "gulp-uglify": "^3.0.0",
     "prettier": "^1.5.2",
     "pump": "^1.0.2",
-    "uglify-js": "^3.0.20"
-  }
+    "uglify-js": "^3.0.20",
+  },
 }
