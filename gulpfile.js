@@ -21,7 +21,7 @@ const config = {
   src: 'src/',
   dest: 'dest/',
   htmlSrc: 'src/index.html',
-  assets: ['src/manifest.json', 'src/robots.txt'],
+  assets: ['src/manifest.json', 'src/robots.txt', 'src/CNAME'],
   images: ['src/assets/*'],
   imagesDest: 'dest/assets',
   prodJsSrc: ['src/vendor/analytics.js'],

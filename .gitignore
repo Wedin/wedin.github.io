@@ -1,4 +1,7 @@
 # Created by https://www.gitignore.io/api/osx,node,sublimetext
+
+dest/
+
 ### Node ###
 # Logs
 logs
