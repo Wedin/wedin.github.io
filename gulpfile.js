@@ -13,6 +13,7 @@ const concat = require('gulp-concat');
 const svgmin = require('gulp-svgmin');
 const rev = require('gulp-rev');
 const revReplace = require('gulp-rev-replace');
+const htmlmin = require('gulp-html-minifier');
 
 const config = {
   scssSrc: 'src/*.scss',
@@ -20,7 +21,7 @@ const config = {
   src: 'src/',
   dest: 'dest/',
   htmlSrc: 'src/index.html',
-  assets: ['src/manifest.json'],
+  assets: ['src/manifest.json', 'src/robots.txt'],
   images: ['src/assets/*'],
   imagesDest: 'dest/assets',
   prodJsSrc: ['src/vendor/analytics.js'],
@@ -71,6 +72,7 @@ gulp.task('copy-static', ['images', 'sass'], () => {
   return gulp
     .src(config.htmlSrc)
     .pipe(config.production ? inlinesource({ rootpath: config.dest }) : util.noop())
+    .pipe(config.production ? htmlmin({collapseWhitespace: true}) : util.noop())
     .pipe(gulp.dest(config.dest));
 });
 
