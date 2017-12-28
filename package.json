@@ -6,7 +6,7 @@
   "scripts": {
     "publish": "push-dir --dir=dest --branch=master --message=\"Release at $(date '+%Y-%m-%d %H:%M:%S')\"",
     "production": "gulp build --production",
-    "deploy": "npm run production && npm run publish-2",
+    "deploy": "npm run production && npm run publish",
     "prettier": "prettier  --config ./.prettierrc '{src,__{tests}__}/**/*.js' --write"
   },
   "repository": {
