@@ -11,6 +11,8 @@ const clean = require('gulp-clean');
 const inlinesource = require('gulp-inline-source');
 const concat = require('gulp-concat');
 const svgmin = require('gulp-svgmin');
+const rev = require('gulp-rev');
+const revReplace = require('gulp-rev-replace');
 
 const config = {
   scssSrc: 'src/*.scss',
@@ -20,6 +22,7 @@ const config = {
   htmlSrc: 'src/index.html',
   assets: ['src/manifest.json'],
   images: ['src/assets/*'],
+  imagesDest: 'dest/assets',
   prodJsSrc: ['src/vendor/analytics.js'],
   production: !!util.env.production // --production
 };
@@ -53,21 +56,26 @@ gulp.task('scripts', cb => {
 });
 
 gulp.task('images', () => {
-  gulp
+  return gulp
     .src(config.images)
     .pipe(svgmin())
-    .pipe(gulp.dest(`${config.dest}/assets`));
+    .pipe(config.production ? rev() : util.noop())
+    .pipe(gulp.dest(config.imagesDest))
+    .pipe(config.production ? rev.manifest() : util.noop())
+    .pipe(config.production ? gulp.dest(config.imagesDest) : util.noop())
 });
 
-gulp.task('copy-static', ['images'], () => {
-  gulp
+gulp.task('copy-static', ['images', 'sass'], () => {
+  gulp.src(config.assets).pipe(gulp.dest(config.dest));
+
+  return gulp
     .src(config.htmlSrc)
     .pipe(config.production ? inlinesource({ rootpath: config.dest }) : util.noop())
     .pipe(gulp.dest(config.dest));
-  gulp.src(config.assets).pipe(gulp.dest(config.dest));
 });
 
-gulp.task('sass', () => {
+gulp.task('sass', ['images'],  () => {
+  var manifestPath = gulp.src(config.imagesDest + '/rev-manifest.json');
   return gulp
     .src(config.scssSrc)
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
@@ -79,6 +87,7 @@ gulp.task('sass', () => {
           })
         : util.noop()
     )
+    .pipe(config.production ? revReplace({manifest: manifestPath}) : util.noop())
     .pipe(gulp.dest(config.dest))
     .pipe(browserSync.stream());
 });
@@ -87,5 +96,5 @@ gulp.task('cleanup', cb => {
   return gulp.src(config.dest + '*').pipe(clean());
 });
 
-gulp.task('build', gulpSequence('cleanup', ['sass', 'scripts'], 'copy-static'));
+gulp.task('build', gulpSequence('cleanup', 'images',  ['sass', 'scripts'], 'copy-static'));
 gulp.task('default', ['serve']);
