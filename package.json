@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "publish": "push-dir --dir=dest --branch=master --message=\"Release at $(date)\"",
+    "publish": "push-dir --dir=dest --branch=master --message=\"Release at $(date '+%Y-%m-%d %H:%M:%S')\"",
     "production": "gulp build --production",
     "deploy": "npm run production && npm run publish-2",
     "prettier": "prettier  --config ./.prettierrc '{src,__{tests}__}/**/*.js' --write"
