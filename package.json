@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "git subtree push --prefix dest origin master",
-    "publish-f": "git push origin `git subtree split --prefix dest master`:master --force",
+    "publish-2": "push-dir --dir=dest --branch=master --message='Release at $(date)'",
     "production": "gulp build --production",
-    "deploy": "npm run production && npm run publish",
+    "deploy": "npm run production && npm run publish-2",
     "prettier": "prettier  --config ./.prettierrc '{src,__{tests}__}/**/*.js' --write"
   },
   "repository": {
@@ -41,5 +41,8 @@
     "prettier": "^1.6.1",
     "pump": "^2.0.0",
     "uglify-js": "^3.3.2"
+  },
+  "dependencies": {
+    "push-dir": "^0.4.1"
   }
 }
