@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "publish": "git subtree push --prefix dest origin master",
-    "publish-2": "push-dir --dir=dest --branch=master --message='Release at $(date)'",
+    "publish": "push-dir --dir=dest --branch=master --message=\"Release at $(date)\"",
     "production": "gulp build --production",
     "deploy": "npm run production && npm run publish-2",
     "prettier": "prettier  --config ./.prettierrc '{src,__{tests}__}/**/*.js' --write"
