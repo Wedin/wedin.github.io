@@ -2,7 +2,6 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const browserSync = require('browser-sync').create();
 const sass = require('gulp-sass');
-const prettier = require('gulp-nf-prettier');
 const uglify = require('gulp-uglify');
 const autoprefixer = require('gulp-autoprefixer');
 const util = require('gulp-util');
@@ -35,7 +34,7 @@ gulp.task('serve', ['sass', 'scripts', 'copy-static'], () => {
   gulp.watch('src/assets/*', ['copy-static']).on('change', browserSync.reload);
 });
 
-gulp.task('scripts', ['prettier'], cb => {
+gulp.task('scripts', cb => {
   const allScripts = config.production ? [config.jsSrc, ...config.prodJsSrc] : config.jsSrc;
   pump(
     [
@@ -51,26 +50,6 @@ gulp.task('scripts', ['prettier'], cb => {
     ],
     cb
   );
-});
-
-gulp.task('prettier', () => {
-  if (config.production) {
-    return;
-  }
-  gulp
-    .src(config.jsSrc)
-    .pipe(
-      prettier({
-        printWidth: 125,
-        tabWidth: 2,
-        parser: 'flow',
-        singleQuote: true,
-        trailingComma: 'es5',
-        bracketSpacing: true,
-        jsxBracketSameLine: true
-      })
-    )
-    .pipe(gulp.dest(config.src));
 });
 
 gulp.task('images', () => {
