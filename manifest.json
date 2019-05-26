@@ -1,0 +1,14 @@
+{
+    "name": "danielwedin.se",
+    "short_name": "danielwedin.se",
+    "icons": [
+        {
+            "src": "",
+            "sizes": "",
+            "type": ""
+        }
+    ],
+    "theme_color": "#0f0f0f",
+    "background_color": "#0f0f0f",
+    "display": "standalone"
+}
